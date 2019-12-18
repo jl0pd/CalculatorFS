@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+## other
+.ionide/symbolCache.db
+
 ## Visual Studio Code specific files and folder
 .vscode/*
 !.vscode/settings.json
