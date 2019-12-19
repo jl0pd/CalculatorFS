@@ -11,7 +11,7 @@ type CalculatorViewModel(DataBase) as this =
         c = CalculatorViewModel(None) then
             let ar =
                 [| c.B0; c.B1; c.B2; c.B3; c.B4; c.B5; c.B6; c.B7; c.B8; c.B9
-                   c.BPlus; c.BMinus; c.BMul; c.BDiv |]
+                   c.BPlus; c.BMinus; c.BMul; c.BDiv; c.BEq |]
                 |> Array.map ( fun x -> x :>  System.IObservable<string>)
                 |> System.Reactive.Linq.Observable.Merge
             ar.Subscribe (fun x -> c.Value <- sprintf "%s%s" c.Value x)
@@ -75,6 +75,10 @@ type CalculatorViewModel(DataBase) as this =
     
     member val BDiv = 
         ReactiveCommand.Create<Unit, string>((fun () -> "/"))
+        with get 
+
+    member val BEq = 
+        ReactiveCommand.Create<Unit, string>((fun () -> "="))
         with get 
 
 
