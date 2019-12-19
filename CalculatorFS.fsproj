@@ -6,8 +6,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Compile Include="ViewModels/ViewModelBase.fs" />
+    <Compile Include="ViewModels/CalculatorViewModel.fs" />
     <Compile Include="ViewModels/MainWindowViewModel.fs" />
     <Compile Include="Views/MainWindow.xaml.fs" />
+    <Compile Include="Views/CalculatorView.xaml.fs" />
     <Compile Include="App.xaml.fs" />
     <Compile Include="ViewLocator.fs" />
     <Compile Include="Program.fs" />

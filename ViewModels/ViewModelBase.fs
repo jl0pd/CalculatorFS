@@ -1,6 +1,6 @@
 namespace CalculatorFS.ViewModels
 
-open ReactiveUI;
+open ReactiveUI
 
 type ViewModelBase() =
     inherit ReactiveObject()

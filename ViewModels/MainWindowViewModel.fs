@@ -1,5 +1,10 @@
 namespace CalculatorFS.ViewModels
 
+open ReactiveUI
+
 type MainWindowViewModel() =
     inherit ViewModelBase()
-    member __.Greeting = "Hello world!"
+    let mutable _content = CalculatorViewModel()
+    member this.Content
+        with get() = _content
+        and set newValue = this.RaiseAndSetIfChanged(&_content, newValue) |> ignore

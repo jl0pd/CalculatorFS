@@ -12,6 +12,7 @@ let BuildAvaloniaApp() =
 let AppMain (app: Application) args =
     let window = MainWindow()
     window.DataContext <- MainWindowViewModel()
+    // window.DataContext <- CalculatorViewModel()
     app.Run window
 
 [<EntryPoint>]

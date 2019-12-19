@@ -6,12 +6,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CalculatorFS.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
+        Content="{Binding Content}"
         Title="CalculatorFS">
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
 </Window>

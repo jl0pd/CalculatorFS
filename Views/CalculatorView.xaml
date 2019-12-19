@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:CalculatorFS.ViewModels;assembly=CalculatorFS"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CalculatorFS.Views.CalculatorView">
+
+  <Design.DataContext>
+    <vm:CalculatorViewModel/>
+  </Design.DataContext>
+
+  <UserControl.Styles>
+    <Style Selector="TextBlock.h1">
+      <Setter Property="FontSize" Value="20"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+  </UserControl.Styles>
+
+  <DockPanel>
+    <TextBlock Classes="h1" DockPanel.Dock="Top" Text="{Binding Value}" Height="20" />
+    <Grid ColumnDefinitions="1*,1*,1*,1*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="4">
+      <Button Content="1" Command="{Binding B1}" Grid.Row="0" Grid.Column="0" />
+      <Button Content="2" Command="{Binding B2}" Grid.Row="0" Grid.Column="1" />
+      <Button Content="3" Command="{Binding B3}" Grid.Row="0" Grid.Column="2" />
+      <Button Content="4" Command="{Binding B4}" Grid.Row="1" Grid.Column="0" />
+      <Button Content="5" Command="{Binding B5}" Grid.Row="1" Grid.Column="1" />
+      <Button Content="6" Command="{Binding B6}" Grid.Row="1" Grid.Column="2" />
+      <Button Content="7" Command="{Binding B7}" Grid.Row="2" Grid.Column="0" />
+      <Button Content="8" Command="{Binding B8}" Grid.Row="2" Grid.Column="1" />
+      <Button Content="9" Command="{Binding B9}" Grid.Row="2" Grid.Column="2" />
+      <Button Content="0" Command="{Binding B0}" Grid.Row="3" Grid.Column="1" />
+      <Button Content="+" Command="{Binding BPlus}" Grid.Row="0" Grid.Column="3" />
+      <Button Content="-" Command="{Binding BMinus}" Grid.Row="1" Grid.Column="3" />
+      <Button Content="*" Command="{Binding BMul}" Grid.Row="2" Grid.Column="3" />
+      <Button Content="/" Command="{Binding BDiv}" Grid.Row="3" Grid.Column="3" />
+    </Grid>
+  </DockPanel>
+</UserControl>
