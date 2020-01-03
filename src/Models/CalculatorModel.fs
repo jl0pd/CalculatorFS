@@ -45,10 +45,8 @@ let eval tokens =
 type CalcModel() =
     let mutable _value = ""
     interface IObserver<string> with
-        member this.OnCompleted(): unit = 
-            ()
-        member this.OnError(error: exn): unit = 
-            ()
+        member _.OnCompleted(): unit = ()
+        member _.OnError(error: exn): unit = ()
         member this.OnNext(value: string): unit = 
             match value with
             | "C" -> this.Value <- ""
@@ -70,19 +68,18 @@ type CalcModel() =
         | Some v -> this.Value <- v
         | None   -> this.Value <- ""
 
-    member this.EvalOnSuccess = function
+    member _.EvalOnSuccess = function
         | None -> None
         | Some x ->
             match eval x with
             | EFailure f -> printfn "%s" f; None
             | ESuccess s -> Some (string s)
 
-    member this.Compute value =
-        printfn "Computing for %s" value
+    member _.Compute value =
         match run pCalc value with
         | Success (result, _, _) -> Some result
         | Failure _ -> None
-    
+
     member _.Value
         with get() = _value
-        and set value = printfn "Actual value: %s" value; _value <- value
+        and set value = _value <- value
