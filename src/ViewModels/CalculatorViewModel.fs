@@ -12,7 +12,7 @@ type CalculatorViewModel() =
 
     member vm.Initialize() =
         [| vm.B0; vm.B1; vm.B2; vm.B3; vm.B4; vm.B5; vm.B6; vm.B7; vm.B8; vm.B9
-           vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq |]
+           vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq; vm.BC |]
         |> Array.map (fun x -> x :> IObservable<string>)
         |> RObservable.Merge
         |> Observable.subscribe<string>(fun x -> 
@@ -85,4 +85,6 @@ type CalculatorViewModel() =
         makeProperty "="
         with get 
 
-
+    member val BC =
+        makeProperty "C"
+        with get

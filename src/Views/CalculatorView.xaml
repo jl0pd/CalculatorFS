@@ -51,6 +51,7 @@
       <Button Classes="h1" Content="*" Command="{Binding BMul}" Grid.Row="2" Grid.Column="3" />
       <Button Classes="h1" Content="/" Command="{Binding BDiv}" Grid.Row="3" Grid.Column="3" />
       <Button Classes="h1" Content="=" Command="{Binding BEq}" Grid.Row="3" Grid.Column="2" />
+      <Button Classes="h1" Content="C" Command="{Binding BC}" Grid.Row="3" Grid.Column="0" />
     </Grid>
   </DockPanel>
 </UserControl>
