@@ -12,14 +12,11 @@ type CalculatorViewModel() as this =
     let mutable _value = ""
 
     member vm.Initialize() =
-        let ar =
-            [| vm.B0; vm.B1; vm.B2; vm.B3; vm.B4; vm.B5; vm.B6; vm.B7; vm.B8; vm.B9
-               vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq |]
-            |> Array.map (fun x -> x :>  System.IObservable<string>)
-            |> RObservable.Merge
-            |> Observable.subscribe<string> (fun x -> (vm.CalculatorModel :> IObserver<string>).OnNext x)
-        ar |> ignore
-        ()
+        [| vm.B0; vm.B1; vm.B2; vm.B3; vm.B4; vm.B5; vm.B6; vm.B7; vm.B8; vm.B9
+           vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq |]
+        |> Array.map (fun x -> x :> System.IObservable<string>)
+        |> RObservable.Merge
+        |> Observable.subscribe<string> (fun x -> (vm.CalculatorModel :> IObserver<string>).OnNext x)
 
     member val CalculatorModel: CalcModel = CalcModel()
         with get

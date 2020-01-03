@@ -35,7 +35,7 @@ match run pCalc str with
 | Failure(errorMsg, _, _) -> printfn "Failure: %s" errorMsg
 
 
-type CalcModel() =
+type CalcModel() as this =
     let mutable _value = ""
     interface IObserver<string> with
         member this.OnCompleted(): unit = 
@@ -43,7 +43,8 @@ type CalcModel() =
         member this.OnError(error: exn): unit = 
             ()
         member this.OnNext(value: string): unit = 
-            ()
+            this.Value <- this.Value + value
 
     member _.Value
         with get() = _value
+        and set value = _value <- value
