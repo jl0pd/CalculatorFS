@@ -4,9 +4,9 @@ open System
 open FParsec
 
 type InputTypes =
-    | Digit of string
+    | Digit    of string
     | Operator of string
-    | Command of string
+    | Command  of string
 
 type CalcTypes =
     | Number   of  float
@@ -25,11 +25,12 @@ let pUnary: Parser<CalcTypes, unit> =
                   |  c  -> failwithf "Unexpected token %A" c 
 
 let pBinary = anyOf "+-*/" |>> function
-                                 | '+' -> BinaryOp (+)
-                                 | '-' -> BinaryOp (-)
-                                 | '*' -> BinaryOp (*)
-                                 | '/' -> BinaryOp (/)
-                                 |  c  -> failwithf "Unexpected token %A" c 
+                               | '+' -> BinaryOp (+)
+                               | '-' -> BinaryOp (-)
+                               | '*' -> BinaryOp (*)
+                               | '/' -> BinaryOp (/)
+                               |  c  -> failwithf "Unexpected token %A" c
+
 let pOperation = pBinary <|> pUnary
 let pToken = pOperation <|> pNumber
 let pCalc = many pToken
@@ -37,14 +38,14 @@ let pCalc = many pToken
 let eval tokens =
     let rec loop res = function
         | BinaryOp f :: Number y :: rem -> loop (f res y) rem
-        | UnaryOp f :: rem -> loop (f res) rem 
+        | UnaryOp  f :: rem -> loop (f res) rem 
         | [] -> ESuccess res
         | _  -> EFailure "smth went wrong"
 
     match tokens with
     | Number x :: xs -> loop x xs
     | BinaryOp _ :: _ | UnaryOp _ :: _
-        -> EFailure <| sprintf "tokens can't be started from operation %A" tokens
+         -> EFailure <| sprintf "tokens can't be started from operation %A" tokens
     | [] -> EFailure "empty list"
 
 type CalcModel() =
@@ -61,14 +62,13 @@ type CalcModel() =
                 | Failure (e,_,_) -> failwithf "Invalid input %s" e
                 | Success (s,_,_) ->
                     match s with
-                    | Number _   -> this.Value <- this.Value + value
-                    | BinaryOp b -> this.Compute this.Value
-                                    |> this.EvalOnSuccess
-                                    |> this.UpdateOnSuccess
+                    | Number   _ -> this.Value <- this.Value + value
+                    | UnaryOp  u -> this.ProcessValue (this.Value + value)
+                    | BinaryOp b -> this.ProcessValue this.Value
                                     this.Value <- this.Value + value
-                    | UnaryOp u  -> this.Compute (this.Value + value)
-                                    |> this.EvalOnSuccess
-                                    |> this.UpdateOnSuccess
+
+    member this.ProcessValue =
+        this.Compute >> this.EvalOnSuccess >> this.UpdateOnSuccess
 
     member this.UpdateOnSuccess = function
         | Some v -> this.Value <- v
@@ -78,7 +78,7 @@ type CalcModel() =
         | None -> None
         | Some x ->
             match eval x with
-            | EFailure f -> printfn "%s" f; None
+            | EFailure f -> None
             | ESuccess s -> Some (string s)
 
     member _.Compute value =
