@@ -3,6 +3,11 @@ module CalculatorFS.Models
 open System
 open FParsec
 
+type InputTypes =
+    | Digit of string
+    | Operator of string
+    | Command of string
+
 type CalcTypes =
     | Number   of  float
     | BinaryOp of (float -> float -> float)
@@ -44,13 +49,14 @@ let eval tokens =
 
 type CalcModel() =
     let mutable _value = ""
-    interface IObserver<string> with
+    interface IObserver<InputTypes> with
         member _.OnCompleted(): unit = ()
         member _.OnError(error: exn): unit = ()
-        member this.OnNext(value: string): unit = 
+        member this.OnNext(value: InputTypes): unit = 
             match value with
-            | "C" -> this.Value <- ""
-            | _   ->
+            | Command "C" -> this.Value <- ""
+            | Command com -> failwithf "Unexpected command %s" com
+            | Digit value | Operator value  ->
                 match run pToken value with
                 | Failure (e,_,_) -> failwithf "Invalid input %s" e
                 | Success (s,_,_) ->
