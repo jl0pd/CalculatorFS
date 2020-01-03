@@ -9,21 +9,21 @@ type RObservable = System.Reactive.Linq.Observable
 type CalculatorViewModel() =
     inherit ViewModelBase()
     let makeProperty sym = ReactiveCommand.Create<Unit, string>(fun() -> sym) 
-    let mutable _value = ""
 
     member vm.Initialize() =
         [| vm.B0; vm.B1; vm.B2; vm.B3; vm.B4; vm.B5; vm.B6; vm.B7; vm.B8; vm.B9
            vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq |]
         |> Array.map (fun x -> x :> IObservable<string>)
         |> RObservable.Merge
-        |> Observable.subscribe<string> (fun x -> (vm.CalculatorModel :> IObserver<string>).OnNext x)
+        |> Observable.subscribe<string>(fun x -> 
+            (vm.CalculatorModel :> IObserver<string>).OnNext x
+            vm.RaisePropertyChanged "Value")
 
     member val CalculatorModel: CalcModel = CalcModel()
         with get
 
     member this.Value
-        with get() = _value
-        and set newVal = this.RaiseAndSetIfChanged(&_value, newVal) |> ignore
+        with get() = this.CalculatorModel.Value
 
     member val B1 = 
         makeProperty "1"
