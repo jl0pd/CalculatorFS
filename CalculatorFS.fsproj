@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Include="Models/CalculatorModel.fs" />
     <Compile Include="ViewModels/ViewModelBase.fs" />
     <Compile Include="ViewModels/CalculatorViewModel.fs" />
     <Compile Include="ViewModels/MainWindowViewModel.fs" />
@@ -25,5 +25,6 @@
     <PackageReference Include="Avalonia" Version="0.8.2" />
     <PackageReference Include="Avalonia.Desktop" Version="0.8.2" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.2" />
+    <PackageReference Include="fparsec" Version="1.0.3" />
   </ItemGroup>
 </Project>
