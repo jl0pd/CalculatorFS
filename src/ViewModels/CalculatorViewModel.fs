@@ -6,7 +6,7 @@ open CalculatorFS.Models
 
 type RObservable = System.Reactive.Linq.Observable
 
-type CalculatorViewModel() as this =
+type CalculatorViewModel() =
     inherit ViewModelBase()
     let makeProperty sym = ReactiveCommand.Create<Unit, string>(fun() -> sym) 
     let mutable _value = ""

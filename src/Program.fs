@@ -1,5 +1,7 @@
 open System
 open Avalonia
+open Avalonia.Controls
+open Avalonia.ReactiveUI
 open Avalonia.Logging.Serilog
 open CalculatorFS.ViewModels
 open CalculatorFS.Views
@@ -7,15 +9,15 @@ open CalculatorFS
 
 
 let BuildAvaloniaApp() =
-    AppBuilder.Configure<App>().UsePlatformDetect().LogToDebug().UseReactiveUI()
+    AppBuilder.Configure<App>().UseReactiveUI().UsePlatformDetect().LogToDebug()
 
-let AppMain (app: Application) args =
+let AppMain (app: Application) (args: string array) =
     let window = MainWindow()
     window.DataContext <- MainWindowViewModel()
-    // window.DataContext <- CalculatorViewModel()
     app.Run window
 
 [<EntryPoint>]
 let main args =
-    BuildAvaloniaApp().Start(AppMain, args)
+    let a = new AppBuilderBase.AppMainDelegate<AppBuilder>(AppMain)
+    BuildAvaloniaApp().Start(a, args)
     0
