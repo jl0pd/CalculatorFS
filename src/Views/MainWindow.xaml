@@ -7,5 +7,6 @@
         x:Class="CalculatorFS.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Content="{Binding Content}"
-        Title="CalculatorFS">
+        Title="CalculatorFS"
+        MinWidth="200" MinHeight="300">
 </Window>
