@@ -44,6 +44,7 @@ type CalcModel() =
             ()
         member this.OnNext(value: string): unit = 
             this.Value <- this.Value + value
+            printfn "Got %s" value
 
     member _.Value
         with get() = _value
