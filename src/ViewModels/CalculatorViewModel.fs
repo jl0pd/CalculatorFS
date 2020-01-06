@@ -12,10 +12,10 @@ type CalculatorViewModel() =
     member vm.Initialize() =
         [ vm.B0; vm.B1; vm.B2; vm.B3; vm.B4; vm.B5; vm.B6; vm.B7; vm.B8; vm.B9;
           vm.BPlus; vm.BMinus; vm.BMul; vm.BDiv; vm.BEq; vm.BClr ]
-        |> List.map (fun x -> x :> IObservable<InputTypes>)
+        |> List.map (fun x -> x :> IObservable<_>)
         |> List.reduce Observable.merge
-        |> Observable.subscribe<InputTypes>(fun x -> 
-            (vm.CalculatorModel :> IObserver<InputTypes>).OnNext x
+        |> Observable.subscribe<_>(fun x -> 
+            (vm.CalculatorModel :> IObserver<_>).OnNext x
             vm.RaisePropertyChanged "Value")
 
     member val CalculatorModel = CalcModel()

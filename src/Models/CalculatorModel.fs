@@ -24,12 +24,13 @@ let pUnary: Parser<CalcTypes, unit> =
                   | '=' -> UnaryOp (fun (x: float) -> x)
                   |  c  -> failwithf "Unexpected token %A" c 
 
-let pBinary = anyOf "+-*/" |>> function
-                               | '+' -> BinaryOp (+)
-                               | '-' -> BinaryOp (-)
-                               | '*' -> BinaryOp (*)
-                               | '/' -> BinaryOp (/)
-                               |  c  -> failwithf "Unexpected token %A" c
+let pBinary =
+    anyOf "+-*/" |>> function
+                     | '+' -> BinaryOp (+)
+                     | '-' -> BinaryOp (-)
+                     | '*' -> BinaryOp (*)
+                     | '/' -> BinaryOp (/)
+                     |  c  -> failwithf "Unexpected token %A" c
 
 let pOperation = pBinary <|> pUnary
 let pToken = pOperation <|> pNumber
@@ -40,13 +41,13 @@ let eval tokens =
         | BinaryOp f :: Number y :: rem -> loop (f res y) rem
         | UnaryOp  f :: rem -> loop (f res) rem 
         | [] -> ESuccess res
-        | _  -> EFailure "smth went wrong"
+        | _  -> EFailure "Something went wrong"
 
     match tokens with
     | Number x :: xs -> loop x xs
     | BinaryOp _ :: _ | UnaryOp _ :: _
-         -> EFailure <| sprintf "tokens can't be started from operation %A" tokens
-    | [] -> EFailure "empty list"
+         -> EFailure <| sprintf "Tokens can't be started from operation %A" tokens
+    | [] -> EFailure "Empty list"
 
 type CalcModel() =
     let mutable _value = ""
@@ -68,7 +69,7 @@ type CalcModel() =
                                     this.Value <- this.Value + value
 
     member this.ProcessValue =
-        this.Compute >> this.EvalOnSuccess >> this.UpdateOnSuccess
+        this.Tokenize >> this.EvalOnSuccess >> this.UpdateOnSuccess
 
     member this.UpdateOnSuccess = function
         | Some v -> this.Value <- v
@@ -81,7 +82,7 @@ type CalcModel() =
             | EFailure f -> None
             | ESuccess s -> Some (string s)
 
-    member _.Compute value =
+    member _.Tokenize value =
         match run pCalc value with
         | Success (result, _, _) -> Some result
         | Failure _ -> None
